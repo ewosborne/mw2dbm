@@ -6,9 +6,15 @@ values and sum of all mw.
 
 This is maybe my third go program ever.  Please be nice.
 
-Usage:
+## Usage:
 
+Single value:
+```
+mw2dbm % ./mw2dbm 1.619
+mw 1.6190 db 2.0925
+```
 
+Multiple values:
 ```
 mw2dbm % ./mw2dbm 1.619 0.928 0.024 0.023
 mw 1.6190 db 2.0925
