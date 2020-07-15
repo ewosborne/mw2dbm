@@ -10,7 +10,7 @@ Usage:
 
 
 ```
-eosborne@eosborne-mac mw2dbm % ./mw2dbm 1.619 0.928 0.024 0.023
+mw2dbm % ./mw2dbm 1.619 0.928 0.024 0.023
 mw 1.6190 db 2.0925
 mw 0.9280 db -0.3245
 mw 0.0240 db -16.1979
