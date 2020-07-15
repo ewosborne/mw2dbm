@@ -32,16 +32,16 @@ func main() {
 	}
 
 	// if there's more than one arg, print a table
-	if len(floatArgs) > 1 {
-		for _, val := range floatArgs {
-			dbm := mw2dbm(val)
-			fmt.Printf("mw %6.4f db %6.4f\n", val, dbm)
-		}
+	for _, val := range floatArgs {
+		dbm := mw2dbm(val)
+		fmt.Printf("mw %6.4f db %6.4f\n", val, dbm)
 	}
 
-	dbmSum = mw2dbm(mwSum)
-	fmt.Println("mw sum", mwSum)
-	fmt.Println("dbm sum", dbmSum)
+	if len(floatArgs) > 1 {
+		dbmSum = mw2dbm(mwSum)
+		fmt.Println("mw sum", mwSum)
+		fmt.Println("dbm sum", dbmSum)
+	}
 
 }
 
