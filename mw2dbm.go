@@ -9,45 +9,70 @@ import (
 
 func main() {
 
-	// array of float args
-	var floatArgs []float64
-
-	// sum of all mw input values
-	var mwSum float64
-	var dbmSum float64
-
 	// grab all CLI args
 	args := os.Args[1:]
 
+	// error checks
 	if len(args) == 0 {
-		fmt.Println("zero!")
+		fmt.Println("zero args given! that's dumb!")
 		os.Exit(1)
 	}
 
 	// convert all CLI args to floats
-	for _, val := range args {
-		tmp, _ := strconv.ParseFloat(val, 8)
-		floatArgs = append(floatArgs, tmp)
-		mwSum += tmp
-	}
+	mwArgs := arrayToFloat(args)
 
-	// if there's more than one arg, print a table
-	for _, val := range floatArgs {
-		dbm := mw2dbm(val)
-		fmt.Printf("mw %6.4f db %6.4f\n", val, dbm)
-	}
+	// convert everything in mwArgs to dBm
+	dbmArgs := mwArrayToDbm(mwArgs)
 
-	if len(floatArgs) > 1 {
-		dbmSum = mw2dbm(mwSum)
-		fmt.Println("mw sum", mwSum)
-		fmt.Println("dbm sum", dbmSum)
-	}
+	// print columns of mw and dbm
+	printSummaryTable(mwArgs, dbmArgs)
 
+}
+
+func mwArrayToDbm(items []float64) []float64 {
+	var retVal []float64
+	for _, val := range items {
+		retVal = append(retVal, mw2dbm(val))
+	}
+	return retVal
 }
 
 func mw2dbm(mw float64) float64 {
 	// receive mw
-	// return int
+	// return dbm
 	return math.Log10(mw) * 10
 
+}
+
+func sumFloat64(items []float64) float64 {
+	var arraySum float64
+	for _, val := range items {
+		arraySum += val
+	}
+	return arraySum
+}
+
+func arrayToFloat(src []string) []float64 {
+	var floatArgs []float64
+	for _, val := range src {
+		tmp, _ := strconv.ParseFloat(val, 8)
+		floatArgs = append(floatArgs, tmp)
+	}
+	return floatArgs
+}
+
+func printSummaryTable(mwArgs []float64, dbmArgs []float64) {
+	fmt.Println("        mw | dbm ")
+	for idx, val := range mwArgs {
+		fmt.Printf("    %6.3f | %6.3f\n", val, dbmArgs[idx])
+	}
+
+	// if there's more than one argument, also print the column sums
+	if len(mwArgs) > 1 {
+		// sum up all mw
+		mwSum := sumFloat64(mwArgs)
+		dbmSum := mw2dbm(sumFloat64(mwArgs))
+		fmt.Printf("SUM:%6.3f | %6.3f\n", mwSum, dbmSum)
+
+	}
 }
